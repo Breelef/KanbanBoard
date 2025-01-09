@@ -113,7 +113,6 @@ export default defineComponent({
           :card="card"
           :columnColor="column.color"
           @removeCard="removeCardFromColumn(column.id, card.id)"
-          @dragstart="onDragStart(card.id)"
           draggable="true"
         />
       </div>
