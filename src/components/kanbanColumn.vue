@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, type PropType } from 'vue'
 import type { Column } from '../utils/kanbanLogic'
 import KanbanCard from '@/components/KanbanCard.vue'
 import CreateCardModal from '@/components/CreateCardModal.vue'
@@ -13,11 +13,11 @@ export default defineComponent({
       required: true,
     },
     addCard: {
-      type: Function,
+      type: Function as PropType<(card: { title: string; description: string; columnId: number }) => void>,
       required: true,
     },
     removeCardFromColumn: {
-      type: Function,
+      type: Function as PropType<(columnId: number, cardId: number) => void>,
       required: true,
     },
   },
@@ -70,6 +70,7 @@ export default defineComponent({
   },
 })
 </script>
+
 <template>
   <div
     :class="[
