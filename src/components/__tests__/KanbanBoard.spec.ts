@@ -1,8 +1,8 @@
 import { describe, it, expect } from "vitest";
 import { mount } from '@vue/test-utils';
-import KanbanBoard from '@/components/KanbanBoard.vue';
-import KanbanColumn from '@/components/KanbanColumn.vue';
-import KanbanCard from '@/components/KanbanCard.vue';
+import KanbanBoard from '../KanbanBoard.vue';
+import KanbanColumn from '../kanbanColumn.vue';
+import KanbanCard from '../KanbanCard.vue';
 import { createColumn, createCard } from '@/utils/kanbanLogic.ts';
 
 describe('KanbanBoard.vue', () => {
