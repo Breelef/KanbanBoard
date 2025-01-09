@@ -2,7 +2,7 @@
 import { defineComponent, reactive } from 'vue'
 import { createColumn, createCard } from '../utils/kanbanLogic.ts'
 import type { Column } from '../utils/kanbanLogic.ts'
-import KanbanColumn from './kanbanColumn.vue'
+import KanbanColumn from './KanbanColumn.vue'
 
 export default defineComponent({
   name: 'KanbanBoard',
@@ -34,24 +34,24 @@ export default defineComponent({
     }
 
     function moveCard(cardId: number, targetColumnId: number, targetIndex: number) {
-      let cardToMove: any = null
-      let sourceColumn: Column | undefined
+  console.log('Moving card', cardId, 'to column', targetColumnId, 'at index', targetIndex)  // Add this for debugging
 
-      // Find and remove card from source column
-      columns.forEach((col) => {
-        const cardIndex = col.cards.findIndex((card) => card.id === cardId)
-        if (cardIndex !== -1) {
-          sourceColumn = col
-          cardToMove = col.cards.splice(cardIndex, 1)[0]
-        }
-      })
+  let cardToMove: any = null
+  let sourceColumn: Column | undefined
 
-      // Insert card at specific position in target column
-      const targetColumn = columns.find((col) => col.id === targetColumnId)
-      if (cardToMove && targetColumn) {
-        targetColumn.cards.splice(targetIndex, 0, cardToMove)
-      }
+  columns.forEach((col) => {
+    const cardIndex = col.cards.findIndex((card) => card.id === cardId)
+    if (cardIndex !== -1) {
+      sourceColumn = col
+      cardToMove = col.cards.splice(cardIndex, 1)[0]
     }
+  })
+
+  const targetColumn = columns.find((col) => col.id === targetColumnId)
+  if (cardToMove && targetColumn) {
+    targetColumn.cards.splice(targetIndex, 0, cardToMove)
+  }
+}
 
     return { columns, addCard, removeCardFromColumn, moveCard }
   },

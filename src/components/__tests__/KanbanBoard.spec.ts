@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import KanbanBoard from '../KanbanBoard.vue'
-import KanbanColumn from '../kanbanColumn.vue'
+import KanbanColumn from '../KanbanColumn.vue'
 import KanbanCard from '../KanbanCard.vue'
 
 describe('KanbanBoard.vue', () => {

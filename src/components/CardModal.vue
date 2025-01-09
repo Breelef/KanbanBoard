@@ -44,44 +44,35 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, type PropType } from 'vue'
+import type { Card } from '../utils/kanbanLogic'
 
 export default defineComponent({
-  name: 'CreateCardModal',
+  name: 'CardModal',
   props: {
-    isVisible: {
-      type: Boolean,
-      required: true,
-    },
-    columnId: {
-      type: Number,
-      required: true,
+    isVisible: Boolean,
+    columnId: Number,
+    card: {
+      type: Object as PropType<Card | null>,
+      required: false,
     },
   },
-  emits: ['close', 'createCard'],
+  emits: ['close', 'createCard', 'updateCard'],
   setup(props, { emit }) {
-    const title = ref('')
-    const description = ref('')
-    console.log(props.isVisible)
-
     const closeModal = () => {
       emit('close')
     }
 
-    const submitForm = () => {
-      if (title.value.trim() && description.value.trim()) {
-        emit('createCard', {
-          title: title.value,
-          description: description.value,
-          columnId: props.columnId,
-        })
-        title.value = ''
-        description.value = ''
-        closeModal()
+    const updateCard = () => {
+      if (props.card) {
+        emit('updateCard', props.card)
       }
     }
 
-    return { title, description, closeModal, submitForm }
+    return {
+      closeModal,
+      updateCard
+    }
   },
 })
 </script>

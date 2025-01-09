@@ -22,7 +22,7 @@ function removeCard() {
 function onDragStart(event: DragEvent) {
   if (event.dataTransfer) {
     event.dataTransfer.effectAllowed = 'move'
-    event.dataTransfer.setData('cardId', props.card.id.toString())
+    event.dataTransfer.setData('cardId', props.card.id.toString())  // Ensure cardId is properly set
     emit('dragstart', props.card.id)
   }
 }
@@ -42,6 +42,7 @@ const formatDate = (timestamp: number) => {
     :class="['rounded-lg shadow p-2 bg-gray-100 border border-black cursor-move group']"
     draggable="true"
     @dragstart="onDragStart"
+    @click="$emit('editCard', card)"
   >
     <div class="flex justify-between items-start">
       <div>
@@ -53,7 +54,7 @@ const formatDate = (timestamp: number) => {
         </p>
       </div>
       <button
-        @click="removeCard"
+        @click.stop="removeCard"
         class="opacity-0 group-hover:opacity-100 transition-opacity duration-200 -mt-1 -mr-1 hover:bg-red-100 p-1 rounded-lg"
       >
         <XCircle class="w-4 h-4 text-red-500 hover:text-red-600" />
