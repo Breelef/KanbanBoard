@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { Card } from '../utils/kanbanLogic';
-import { XCircle, Clock } from 'lucide-vue-next';
+import type { Card } from '../utils/kanbanLogic'
+import { XCircle, Clock } from 'lucide-vue-next'
 
 const props = defineProps({
   card: {
@@ -11,19 +11,19 @@ const props = defineProps({
     type: String,
     required: true,
   },
-});
+})
 
-const emit = defineEmits(['removeCard', 'dragstart']);
+const emit = defineEmits(['removeCard', 'dragstart'])
 
 function removeCard() {
-  emit('removeCard', props.card.id);
+  emit('removeCard', props.card.id)
 }
 
 function onDragStart(event: DragEvent) {
   if (event.dataTransfer) {
-    event.dataTransfer.effectAllowed = 'move';
-    event.dataTransfer.setData('cardId', props.card.id.toString());
-    emit('dragstart', props.card.id);
+    event.dataTransfer.effectAllowed = 'move'
+    event.dataTransfer.setData('cardId', props.card.id.toString())
+    emit('dragstart', props.card.id)
   }
 }
 
@@ -32,9 +32,9 @@ const formatDate = (timestamp: number) => {
     month: 'short',
     day: 'numeric',
     hour: '2-digit',
-    minute: '2-digit'
-  });
-};
+    minute: '2-digit',
+  })
+}
 </script>
 
 <template>

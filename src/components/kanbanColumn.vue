@@ -1,8 +1,8 @@
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
-import type { Column } from '../utils/kanbanLogic';
-import KanbanCard from "@/components/KanbanCard.vue";
-import CreateCardModal from "@/components/CreateCardModal.vue";
+import { defineComponent, ref } from 'vue'
+import type { Column } from '../utils/kanbanLogic'
+import KanbanCard from '@/components/KanbanCard.vue'
+import CreateCardModal from '@/components/CreateCardModal.vue'
 
 export default defineComponent({
   name: 'KanbanColumn',
@@ -14,48 +14,48 @@ export default defineComponent({
     },
     addCard: {
       type: Function,
-      required: true
+      required: true,
     },
     removeCardFromColumn: {
       type: Function,
-      required: true
-    }
+      required: true,
+    },
   },
   setup(props, { emit }) {
-    const isModalVisible = ref(false);
-    const dragOverIndex = ref<number | null>(null);
+    const isModalVisible = ref(false)
+    const dragOverIndex = ref<number | null>(null)
 
     const openModal = () => {
-      isModalVisible.value = true;
-    };
+      isModalVisible.value = true
+    }
 
     const closeModal = () => {
-      isModalVisible.value = false;
-    };
+      isModalVisible.value = false
+    }
 
     const onDragEnter = (event: DragEvent, index: number) => {
-      event.preventDefault();
-      dragOverIndex.value = index;
-    };
+      event.preventDefault()
+      dragOverIndex.value = index
+    }
 
     const onDragLeave = () => {
-      dragOverIndex.value = null;
-    };
+      dragOverIndex.value = null
+    }
 
     const onDragOver = (event: DragEvent) => {
-      event.preventDefault();
-    };
+      event.preventDefault()
+    }
 
     const onDrop = (event: DragEvent) => {
-      event.preventDefault();
-      const cardId = Number(event.dataTransfer?.getData('cardId'));
-      const dropIndex = dragOverIndex.value ?? props.column.cards.length;
+      event.preventDefault()
+      const cardId = Number(event.dataTransfer?.getData('cardId'))
+      const dropIndex = dragOverIndex.value ?? props.column.cards.length
 
       if (cardId) {
-        emit('moveCard', cardId, props.column.id, dropIndex);
-        dragOverIndex.value = null;
+        emit('moveCard', cardId, props.column.id, dropIndex)
+        dragOverIndex.value = null
       }
-    };
+    }
 
     return {
       isModalVisible,
@@ -65,14 +65,18 @@ export default defineComponent({
       onDragLeave,
       onDragOver,
       onDrop,
-      dragOverIndex
-    };
+      dragOverIndex,
+    }
   },
-});
+})
 </script>
 <template>
   <div
-    :class="['rounded-lg shadow-md p-4', column.color, 'flex flex-col border-2 border-gray-500 w-full h-full']"
+    :class="[
+      'rounded-lg shadow-md p-4',
+      column.color,
+      'flex flex-col border-2 border-gray-500 w-full h-full',
+    ]"
     @dragover="onDragOver"
   >
     <h2 class="text-xl sm:text-2xl font-semibold text-gray-700 mb-2 text-center">
@@ -87,7 +91,8 @@ export default defineComponent({
       Add Card
     </button>
 
-    <div v-if="column.cards.length === 0"
+    <div
+      v-if="column.cards.length === 0"
       class="text-gray-500 flex-grow flex justify-center items-center min-h-[100px]"
       @dragenter.prevent
       @drop="onDrop"
@@ -95,7 +100,7 @@ export default defineComponent({
       No cards yet...
     </div>
 
-    <div v-else class="flex flex-col gap-2 " :data-testid="'kanban-column-' + column.id">
+    <div v-else class="flex flex-col gap-2" :data-testid="'kanban-column-' + column.id">
       <div v-for="(card, index) in column.cards" :key="card.id">
         <div
           class="drop-zone"

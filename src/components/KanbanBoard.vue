@@ -1,8 +1,8 @@
 <script lang="ts">
-import { defineComponent, reactive } from 'vue';
-import { createColumn, createCard } from '../utils/kanbanLogic.ts';
-import type { Column } from '../utils/kanbanLogic.ts';
-import KanbanColumn from './kanbanColumn.vue';
+import { defineComponent, reactive } from 'vue'
+import { createColumn, createCard } from '../utils/kanbanLogic.ts'
+import type { Column } from '../utils/kanbanLogic.ts'
+import KanbanColumn from './kanbanColumn.vue'
 
 export default defineComponent({
   name: 'KanbanBoard',
@@ -16,46 +16,46 @@ export default defineComponent({
       createColumn(3, 'Test', 'bg-purple-100'),
       createColumn(4, 'Review', 'bg-orange-100'),
       createColumn(5, 'Done', 'bg-green-100'),
-    ]);
+    ])
 
-    function addCard(cardData: { title: string, description: string, columnId: number }) {
-      const newCard = createCard(Date.now(), cardData.title, cardData.description);
-      const column = columns.find(col => col.id === cardData.columnId);
+    function addCard(cardData: { title: string; description: string; columnId: number }) {
+      const newCard = createCard(Date.now(), cardData.title, cardData.description)
+      const column = columns.find((col) => col.id === cardData.columnId)
       if (column) {
-        column.cards.push(newCard);
+        column.cards.push(newCard)
       }
     }
 
     function removeCardFromColumn(columnId: number, cardId: number) {
-      const column = columns.find(col => col.id === columnId);
+      const column = columns.find((col) => col.id === columnId)
       if (column) {
-        column.cards = column.cards.filter(card => card.id !== cardId);
+        column.cards = column.cards.filter((card) => card.id !== cardId)
       }
     }
 
     function moveCard(cardId: number, targetColumnId: number, targetIndex: number) {
-      let cardToMove: any = null;
-      let sourceColumn: Column | undefined;
+      let cardToMove: any = null
+      let sourceColumn: Column | undefined
 
       // Find and remove card from source column
-      columns.forEach(col => {
-        const cardIndex = col.cards.findIndex(card => card.id === cardId);
+      columns.forEach((col) => {
+        const cardIndex = col.cards.findIndex((card) => card.id === cardId)
         if (cardIndex !== -1) {
-          sourceColumn = col;
-          cardToMove = col.cards.splice(cardIndex, 1)[0];
+          sourceColumn = col
+          cardToMove = col.cards.splice(cardIndex, 1)[0]
         }
-      });
+      })
 
       // Insert card at specific position in target column
-      const targetColumn = columns.find(col => col.id === targetColumnId);
+      const targetColumn = columns.find((col) => col.id === targetColumnId)
       if (cardToMove && targetColumn) {
-        targetColumn.cards.splice(targetIndex, 0, cardToMove);
+        targetColumn.cards.splice(targetIndex, 0, cardToMove)
       }
     }
 
-    return { columns, addCard, removeCardFromColumn, moveCard };
+    return { columns, addCard, removeCardFromColumn, moveCard }
   },
-});
+})
 </script>
 
 <template>

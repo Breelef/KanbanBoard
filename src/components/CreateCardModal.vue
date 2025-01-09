@@ -1,6 +1,9 @@
 <template>
   <Teleport to="body">
-    <div v-if="isVisible" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+    <div
+      v-if="isVisible"
+      class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+    >
       <div class="bg-white p-6 rounded-lg w-96">
         <h2 class="text-xl font-semibold mb-4">Create a New Card</h2>
 
@@ -17,7 +20,9 @@
           </div>
 
           <div class="mb-4">
-            <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+            <label for="description" class="block text-sm font-medium text-gray-700"
+              >Description</label
+            >
             <textarea
               id="description"
               v-model="description"
@@ -27,19 +32,10 @@
           </div>
 
           <div class="flex justify-between">
-            <button
-              type="button"
-              @click="closeModal"
-              class="bg-gray-500 text-white p-2 rounded"
-            >
+            <button type="button" @click="closeModal" class="bg-gray-500 text-white p-2 rounded">
               Cancel
             </button>
-            <button
-              type="submit"
-              class="bg-blue-500 text-white p-2 rounded"
-            >
-              Create Card
-            </button>
+            <button type="submit" class="bg-blue-500 text-white p-2 rounded">Create Card</button>
           </div>
         </form>
       </div>
@@ -48,7 +44,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
   name: 'CreateCardModal',
@@ -64,13 +60,13 @@ export default defineComponent({
   },
   emits: ['close', 'createCard'],
   setup(props, { emit }) {
-    const title = ref('');
-    const description = ref('');
-    console.log(props.isVisible);
+    const title = ref('')
+    const description = ref('')
+    console.log(props.isVisible)
 
     const closeModal = () => {
-      emit('close');
-    };
+      emit('close')
+    }
 
     const submitForm = () => {
       if (title.value.trim() && description.value.trim()) {
@@ -78,15 +74,14 @@ export default defineComponent({
           title: title.value,
           description: description.value,
           columnId: props.columnId,
-        });
-        title.value = '';
-        description.value = '';
-        closeModal();
+        })
+        title.value = ''
+        description.value = ''
+        closeModal()
       }
-    };
+    }
 
-    return { title, description, closeModal, submitForm };
+    return { title, description, closeModal, submitForm }
   },
-});
+})
 </script>
-
